@@ -148,6 +148,22 @@ class SLL {
     this.head = prevNode; // at this point, reached end, so current = null
     return this;
   }
+
+  getMiddle() {
+    // for odd lengths, we'll return the lower middle node
+    if (!this.head) return undefined;
+    if (!this.head.next) return this.head;
+    let mid = this.head;
+    let current = this.head.next;
+    let count = 2;
+    while (current) {
+      current = current.next;
+      if (current) count++;
+      if (count % 2 === 0) mid = mid.next;
+    }
+    if (count % 2 !== 0) mid = mid.next;
+    return mid;
+  }
 }
 
 test = new SLL();
