@@ -57,18 +57,6 @@ class Table {
     }
     return values;
   }
-
-  valuesIncludingDuplicates() {
-    let values = [];
-    for (let hashData of this.table) {
-      if (hashData) {
-        for (let key of hashData) {
-          values.push(key[1]);
-        }
-      }
-    }
-    return values;
-  }
 }
 
 let tbl = new Table();
