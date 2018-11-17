@@ -16,7 +16,7 @@ const bubbleSort = arr => {
         swapped = true;
       }
     }
-    if (swapped) end--;
+    end--;
   }
   return arr;
 };
