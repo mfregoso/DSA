@@ -1,5 +1,5 @@
 const binSearch = (target, sortedArr) => {
-  if (!target || !sortedArr) return undefined;
+  if (!sortedArr) return undefined;
 
   const getMiddle = (start, end) => start + Math.floor((end - start) / 2);
 
