@@ -1,4 +1,4 @@
-const iSort = arr => {
+const insertionSort = arr => {
   if (!arr) return undefined;
 
   const swap = (i1, i2) => {

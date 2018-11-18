@@ -1,4 +1,6 @@
 const bubbleSort = arr => {
+  if (!arr) return undefined;
+
   let swapped = true;
   let end = arr.length;
 

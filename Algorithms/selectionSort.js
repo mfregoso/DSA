@@ -1,4 +1,6 @@
 const selectionSort = arr => {
+  if (!arr) return undefined;
+
   const swap = (i1, i2) => {
     let temp = arr[i1];
     arr[i1] = arr[i2];
