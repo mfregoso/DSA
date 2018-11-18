@@ -8,7 +8,7 @@ const insertionSort = arr => {
   };
 
   for (let chk = 1; chk < arr.length; chk++) {
-    for (let i = 0; i < chk; i++) {
+    for (let i = 0; i < chk && arr[i] > arr[chk]; i++) {
       if (arr[i] > arr[chk]) {
         swap(i, chk);
       }
