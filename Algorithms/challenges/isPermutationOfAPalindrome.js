@@ -5,7 +5,8 @@ const isPP = str => {
   }
 
   let oddCount = 0;
-  for (let s of str) {
+  let keys = Object.keys(table);
+  for (let s of keys) {
     if (table[s] % 2 !== 0) oddCount++;
   }
 
