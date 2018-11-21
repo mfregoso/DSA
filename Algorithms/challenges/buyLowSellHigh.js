@@ -20,11 +20,11 @@ const greedIsGood = arr => {
 
   let maxProfit = -Infinity;
   let minPrice = arr[0];
-  
+
   for (let i = 1; i < arr.length; i++) {
     let diff = arr[i] - minPrice;
     maxProfit = Math.max(diff, maxProfit);
     minPrice = Math.min(minPrice, arr[i]);
   }
   return maxProfit;
-}
+};
