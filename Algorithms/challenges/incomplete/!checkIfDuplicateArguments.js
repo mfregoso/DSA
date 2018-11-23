@@ -22,13 +22,13 @@ function areThereDuplicates(...args) {
   // Two pointers
   args.sort((a, b) => a > b);
   let start = 0;
-  let next = 1;
-  while (next < args.length) {
-    if (args[start] === args[next]) {
+  let scout = 1;
+  while (scout < args.length) {
+    if (args[start] === args[scout]) {
       return true;
     }
     start++;
-    next++;
+    scout++;
   }
   return false;
 }
