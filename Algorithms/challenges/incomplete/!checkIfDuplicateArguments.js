@@ -1,3 +1,19 @@
+function anyDupes(...args) {
+  if (args.length < 2) {
+    return false;
+  }
+  let table = new Map();
+  for (let val of args) {
+    if (table.get(val)) {
+      return true;
+    }
+    table.set(val, true)= true;
+  }
+  return false;
+}
+
+console.log(anyDupes(2, 3, 4, 4, 5));
+
 function anyDuplicates(...args) {
   if (args.length < 2) {
     return false;
@@ -8,14 +24,13 @@ function anyDuplicates(...args) {
       return true;
     }
     table[val] = true;
-    // condense above into one line (via Colt)
+    // condense above into one line
     // collection[arguments[val]] = (collection[arguments[val]] || 0) + 1
   }
   return false;
 }
 
-console.log(test(2, 3, 4, 5));
-// NOT perfect because 3 = "3" due to object keys using strings
+console.log(anyDuplicates(2, 3, 4, 5));
 
 // AUTHOR: TWO POINTERS
 function areThereDuplicates(...args) {
