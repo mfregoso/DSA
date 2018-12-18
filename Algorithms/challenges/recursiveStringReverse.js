@@ -1,5 +1,5 @@
 const reverse = str => {
-  if (!str || typeof str !== "string") throw new Error("Not a string");
+  if (typeof str !== "string") throw new Error("Not a string");
 
   let result = "";
 
