@@ -10,7 +10,7 @@ const reverse = str => {
     }
 
     let slice = input.substr(-1);
-    result += slice;
+    result = result.concat(slice);
 
     return recurse(input.substr(0, --length));
   };
