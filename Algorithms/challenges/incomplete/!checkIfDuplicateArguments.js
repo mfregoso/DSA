@@ -7,7 +7,7 @@ function anyDupes(...args) {
     if (table.get(val)) {
       return true;
     }
-    table.set(val, true)= true;
+    table.set(val, true);
   }
   return false;
 }

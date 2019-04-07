@@ -1,15 +1,15 @@
-// SINGLE POINTER(?) SOLUTION
-function countUniqueValues(arr) {
+// O(N) SOLUTION
+const countUniqueValues = (arr) => {
   let unique = 0;
-  let table = {};
+  let map = new Map();
   for (let value of arr) {
-    if (!table[value]) {
-      unique++;
-    }
-    table[value] = 1;
+    if (map.get(value)) continue;
+    map.set(value, true);
+    unique++;
   }
   return unique;
 }
+
 countUniqueValues([2, 3, 4, 5, 5, 6]);
 
 // TWO POINTER SOLUTION ** BROKEN **
