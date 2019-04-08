@@ -1,3 +1,6 @@
+// return the Nth fibonacci value
+
+// O(N) time and space complexity
 const fibonacci = n => {
   const fibs = new Array(n + 1);
   fibs[0] = 0;
@@ -7,3 +10,15 @@ const fibonacci = n => {
   }
   return fibs[n];
 };
+
+// O(N) time and O(1) space complexity
+const fibo = n => {
+  const fibs = [0, 1];
+  if (n < 2) return fibs[n];
+  for (let i = 2; i <= n; i++) {
+      const next = fibs[0] + fibs[1];
+      fibs[0] = fibs[1];
+      fibs[1] = next;
+  }
+  return fibs[1];
+}
