@@ -1,6 +1,6 @@
 // sorted arrays, no duplicates
-let arr1 = [13, 27, 35, 40, 49, 55, 59, 77, 80, 81];
-let arr2 = [17, 35, 39, 40, 55, 58, 60, 70, 75, 77];
+const arr1 = [13, 27, 35, 40, 49, 55, 59, 77, 80, 81];
+const arr2 = [17, 35, 39, 40, 55, 58, 60, 70, 75, 77];
 
 const objMap = (arr1, arr2) => {
   let table = {};
@@ -22,6 +22,7 @@ const simulWalk = (arr1, arr2) => {
   let matches = [];
   let base = 0;
   let scout = 0;
+
   while (base < arr1.length && scout < arr2.length) {
     if (arr2[scout] === arr1[base]) {
       matches.push(arr2[scout]);
@@ -33,5 +34,10 @@ const simulWalk = (arr1, arr2) => {
       scout++;
     }
   }
+  
   return matches;
 };
+
+console.log(objMap(arr1, arr2));
+console.log(hashMap(arr1, arr2));
+console.log(simulWalk(arr1, arr2));
