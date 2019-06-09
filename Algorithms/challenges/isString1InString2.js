@@ -1,4 +1,5 @@
 function isSubsequence(s1, s2) {
+  if (s1.length > s2.length) return false;
   let s1Idx = 0;
   let match = false;
 
@@ -17,6 +18,7 @@ function isSubsequence(s1, s2) {
   return match && s1Idx === s1.length;
 }
 
+console.log(isSubsequence("helloooooo", "hello")); // false
 console.log(isSubsequence("hello", "helloooo")); // true
 console.log(isSubsequence("world", "helloworld")); // true
 console.log(isSubsequence("world", "hellowwwwworld")); // true
