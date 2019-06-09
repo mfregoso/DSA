@@ -1,21 +1,24 @@
-const reverse = str => {
-  if (typeof str !== "string") throw new Error("Not a string");
+const reverse = (str, reversed = "") => {
+  if (reversed.length === str.length) return reversed;
 
-  let result = "";
+  const endChar = str[str.length - 1 - reversed.length];
 
-  const recurse = input => {
-    let length = input.length;
-    if (length < 1) {
-      return result;
-    }
-
-    let slice = input.substr(-1);
-    result = result.concat(slice);
-
-    return recurse(input.substr(0, --length));
-  };
-
-  return recurse(str);
+  return reverse(str, reversed.concat(endChar));
 };
 
-reverse("hello");
+const reverseHelper = str => {
+  let result = "";
+
+  const recurseHelper = input => {
+    if (input.length === 0) return result;
+
+    result = result.concat(input.slice(-1));
+
+    return recurseHelper(input.substr(0, input.length - 1));
+  };
+
+  return recurseHelper(str);
+};
+
+console.log(reverseHelper("hello"));
+console.log(reverse("hello"));
