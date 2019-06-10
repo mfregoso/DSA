@@ -8,8 +8,6 @@ class Node {
 class SLL {
   constructor() {
     this.head = null;
-    this.tail = null;
-    this.length = 0;
   }
 
   loopAll() {
@@ -20,16 +18,23 @@ class SLL {
     }
   }
 
+  getTail() {
+    let node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+    return node;
+  }
+
   push(val) {
     const node = new Node(val);
     if (!this.head) {
       this.head = node;
-      this.tail = node;
     } else {
-      this.tail.next = node;
-      this.tail = node;
+      const tail = this.getTail();
+      tail.next = node;
     }
-    this.length++;
+    return val;
   }
 
   pop() {
@@ -44,12 +49,9 @@ class SLL {
     }
     if (prevNode) {
       prevNode.next = null;
-      this.tail = prevNode;
     } else {
       this.head = null;
-      this.tail = null;
     }
-    this.length--;
     return current;
   }
 
@@ -57,34 +59,26 @@ class SLL {
     if (this.head) {
       let start = this.head;
       this.head = this.head.next;
-      this.length--;
-      if (!this.head) {
-        this.tail = null;
-      }
       return start;
     }
   }
 
   unshift(val) {
-    // insert node at beginning
     let newNode = new Node(val);
     newNode.next = this.head;
     this.head = newNode;
-    this.length++;
-    if (!this.tail) this.tail = newNode;
-    return this;
+    return val;
   }
 
   get(idx) {
-    //if (!this.head) return undefined;
-    if (idx < 0 || idx >= this.length) return undefined;
+    if (idx < 0) return undefined;
     let i = 0;
     let current = this.head;
-    while (i !== idx) {
+    while (i !== idx && current) {
       current = current.next;
       i++;
     }
-    return current;
+    return current ? current : undefined;
   }
 
   set(idx, val) {
@@ -95,33 +89,32 @@ class SLL {
   }
 
   insert(idx, val) {
-    if (idx < 0 || idx > this.length) return false;
+    if (idx < 0) return false;
     if (idx === 0) {
       this.unshift(val);
       return true;
     }
-    if (idx === this.length) {
-      this.push(val);
+    const prevNode = this.get(idx - 1);
+    if (prevNode) {
+      const newNode = new Node(val);
+      newNode.next = prevNode.next;
+      prevNode.next = newNode;
       return true;
     }
-    let newNode = new Node(val);
-    let prevNode = this.get(idx - 1);
-    newNode.next = prevNode.next;
-    prevNode.next = newNode;
-    this.length++;
-    return true;
+    return false;
   }
 
   remove(idx) {
-    if (idx < 0 || idx >= this.length) return false;
-    if (idx === 0) return this.shift(); // !! forces boolean type
-    if (idx === this.length - 1) return this.pop();
+    if (idx < 0) return false;
+    if (idx === 0) return this.shift();
+    const prevNode = this.get(idx - 1);
 
-    let prevNode = this.get(idx - 1);
-    let removed = prevNode.next;
-    prevNode.next = removed.next;
-    this.length--;
-    return removed;
+    if (prevNode) {
+      const removed = prevNode.next;
+      prevNode.next = removed.next;
+      return true;
+    }
+    return false;
   }
 
   reverse() {
@@ -129,7 +122,8 @@ class SLL {
     let nextNode,
       prevNode = null;
     let current = this.head;
-    this.tail = current;
+    let tail = this.getTail();
+    tail = current;
     while (current) {
       nextNode = current.next;
       current.next = prevNode;
