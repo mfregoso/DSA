@@ -19,6 +19,7 @@ class SLL {
   }
 
   getTail() {
+    if (!this.head) return undefined;
     let node = this.head;
     while (node.next) {
       node = node.next;
@@ -122,8 +123,6 @@ class SLL {
     let nextNode,
       prevNode = null;
     let current = this.head;
-    let tail = this.getTail();
-    tail = current;
     while (current) {
       nextNode = current.next;
       current.next = prevNode;
