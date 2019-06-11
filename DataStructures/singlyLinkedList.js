@@ -74,7 +74,7 @@ class SLL {
     if (idx < 0) return undefined;
     let i = 0;
     let current = this.head;
-    while (i !== idx && current) {
+    while (i < idx && current) {
       current = current.next;
       i++;
     }
@@ -134,20 +134,30 @@ class SLL {
     return this;
   }
 
-  getMiddle() {
-    // for odd lengths, we'll return the lower middle node
+  getMiddle() { // for even lengths, we'll return the lower middle node
+    // alternatively: length = this.getLength() & middle = Math.floor(length/2)
     if (!this.head) return undefined;
-    if (!this.head.next) return this.head;
     let mid = this.head;
-    let current = this.head.next;
-    let count = 2;
+    let current = this.head;
+    let moves = 0;
     while (current) {
       current = current.next;
-      if (current) count++;
-      if (count % 2 === 0) mid = mid.next;
+      if (current) moves++;
+      if (moves === 2) {
+        moves = 0;
+        mid = mid.next;
+      }
     }
-    if (count % 2 !== 0) mid = mid.next;
     return mid;
+  }
+
+  getLength() {
+    let length = 0, node = this.head;
+    while (node) {
+      node = node.next;
+      length++;
+    }
+    return length;
   }
 }
 
