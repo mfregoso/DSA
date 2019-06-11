@@ -9,24 +9,21 @@ class Node {
 class DLL {
   constructor() {
     this.head = null;
-    this.tail = null;
   }
 
   loopAll() {
     let current = this.head;
-    let idx = -1;
     while (current) {
-      console.log(++idx + ": " + current.val);
+      console.log(current.val);
       current = current.next;
     }
-    console.log("length = " + ++idx);
   }
 
   loopBack() {
-    let current = this.tail;
-    while (current) {
-      console.log(current.val);
-      current = current.prev;
+    let node = this.getTail();
+    while (node) {
+      console.log(node.val);
+      node = node.prev;
     }
   }
 
@@ -34,20 +31,19 @@ class DLL {
     const newNode = new Node(val);
     if (!this.head) {
       this.head = newNode;
-      this.tail = newNode;
     } else {
-      newNode.prev = this.tail;
-      this.tail.next = newNode;
-      this.tail = newNode;
+      let tail = this.getTail();
+      newNode.prev = tail;
+      tail.next = newNode;
     }
   }
 
   pop() {
-    if (this.tail) {
-      let removed = this.tail;
-      let prevNode = this.tail.prev;
-      this.tail = prevNode;
-      this.tail ? (prevNode.next = null) : (this.head = null); // edge case: empty list
+    let tail = this.getTail();
+    if (tail) {
+      let removed = tail;
+      let prevNode = tail.prev;
+      prevNode ? (prevNode.next = null) : (this.head = null); // edge case: empty list
       return removed;
     }
   }
@@ -56,7 +52,7 @@ class DLL {
     if (this.head) {
       let removed = this.head;
       this.head = removed.next;
-      this.head ? (this.head.prev = null) : (this.tail = null); // edge case: empty list
+      if (this.head) this.head.prev = null;
       return removed;
     }
   }
@@ -64,7 +60,7 @@ class DLL {
   unshift(val) {
     let newNode = new Node(val);
     let nextNode = this.head;
-    nextNode ? (nextNode.prev = newNode) : (this.tail = newNode); // edge case: empty list
+    if (nextNode) nextNode.prev = newNode;
     newNode.next = nextNode;
     this.head = newNode;
     return newNode;
@@ -94,29 +90,28 @@ class DLL {
   insert(idx, val) {
     if (idx < 0) return false;
     if (idx === 0) return !!this.unshift(val);
-    if (this.head) {
-      let newNode = new Node(val);
-      let prevNode = this.get(idx - 1);
-      let nextNode = prevNode.next;
-      if (!nextNode) return this.push(val) || true;
+    const prevNode = this.get(idx - 1);
+    if (prevNode) {
+      const newNode = new Node(val);
+      const nextNode = prevNode.next;
       prevNode.next = newNode;
       newNode.prev = prevNode;
       newNode.next = nextNode;
-      nextNode.prev = newNode;
+      if (nextNode) nextNode.prev = newNode;
       return true;
     }
+    return false;
   }
 
   remove(idx) {
     if (idx < 0) return false;
     if (idx === 0) return !!this.shift();
-    if (this.head) {
-      let removed = this.get(idx);
-      let prevNode = removed.prev;
-      let nextNode = removed.next;
-      if (!nextNode) return !!this.pop();
+    const removed = this.get(idx);
+    if (removed) {
+      const prevNode = removed.prev;
+      const nextNode = removed.next;
       prevNode.next = nextNode;
-      nextNode.prev = prevNode;
+      if (nextNode) nextNode.prev = prevNode;
       return removed;
     }
   }
@@ -126,7 +121,6 @@ class DLL {
     let nextNode,
       prevNode = null;
     let current = this.head;
-    this.tail = current;
     while (current) {
       nextNode = current.next;
       current.prev = nextNode;
@@ -138,20 +132,39 @@ class DLL {
     return this;
   }
 
-  getMiddle() {
-    // for odd lengths, we'll return the lower middle node
+  getMiddle() { // for even lengths, we'll return the lower middle node
+    // alternatively: length = this.getLength() & middle = Math.floor(length/2)
     if (!this.head) return undefined;
-    if (!this.head.next) return this.head;
     let mid = this.head;
-    let current = this.head.next;
-    let count = 2;
+    let current = this.head;
+    let moves = 0;
     while (current) {
       current = current.next;
-      if (current) count++;
-      if (count % 2 === 0) mid = mid.next;
+      if (current) moves++;
+      if (moves === 2) {
+        moves = 0;
+        mid = mid.next;
+      }
     }
-    if (count % 2 !== 0) mid = mid.next;
     return mid;
+  }
+
+  getLength() {
+    let length = 0, node = this.head;
+    while (node) {
+      node = node.next;
+      length++;
+    }
+    return length;
+  }
+
+  getTail() {
+    if (!this.head) return undefined;
+    let node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+    return node;
   }
 }
 
