@@ -1,4 +1,13 @@
-const reverse = (str, reversed = "") => {
+const reverse = str => {
+  if (str.length < 1) return "";
+
+  let start = str.slice(-1);
+  let remainder = str.substr(0, str.length - 1);
+
+  return start.concat(reverse(remainder));
+}
+
+const reverseWith2ndParam = (str, reversed = "") => {
   if (reversed.length === str.length) return reversed;
 
   const endChar = str[str.length - 1 - reversed.length];
@@ -6,7 +15,7 @@ const reverse = (str, reversed = "") => {
   return reverse(str, reversed.concat(endChar));
 };
 
-const reverseHelper = str => {
+const reverseWithHelper = str => {
   let result = "";
 
   const recurseHelper = input => {
@@ -20,5 +29,6 @@ const reverseHelper = str => {
   return recurseHelper(str);
 };
 
-console.log(reverseHelper("hello"));
 console.log(reverse("hello"));
+console.log(reverseWithHelper("hello"));
+console.log(reverseWith2ndParam("hello"))
