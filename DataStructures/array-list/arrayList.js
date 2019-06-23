@@ -44,10 +44,10 @@ class ArrayList {
       return this;
   }
 
-  map(func) {
+  map(callback) {
       const mAL = new ArrayList(this.length);
       for (let i = 0; i < this.length; i++) {
-          mAL[i] = func(this[i], i);
+          mAL[i] = callback(this[i], i);
       }
       return mAL;
   }
@@ -58,6 +58,14 @@ class ArrayList {
       }
       return this;
   }
+
+  reduce(callback, initialValue) { // partially working
+    let result = initialValue;
+    for (let i = 0; i < this.length; i++) {
+        result = callback(result, this[i], i);
+    }
+    return result;
+  }
 }
 
 const test = new ArrayList();
@@ -65,3 +73,8 @@ test.push(1)
 test.push(2)
 test.push(3)
 // const mapped = new ArrayList(4).fill(3).map((item, idx) => item + idx);
+const redu = test.reduce((acc, item) => acc + item, 0);
+console.log(redu); // 6, works as expected
+
+const re = test.reduce((table, item, idx) => table[idx] = item, {});
+console.log(re); // does not work as expected
