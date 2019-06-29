@@ -59,12 +59,12 @@ class ArrayList {
       return this;
   }
 
-  reduce(callback, initialValue) { // partially working
-    let result = initialValue;
+  reduce(callback, initialValue) {
+    let accumulator = initialValue;
     for (let i = 0; i < this.length; i++) {
-        result = callback(result, this[i], i);
+        accumulator = callback(accumulator, this[i], i);
     }
-    return result;
+    return accumulator;
   }
 }
 
@@ -73,8 +73,11 @@ test.push(1)
 test.push(2)
 test.push(3)
 // const mapped = new ArrayList(4).fill(3).map((item, idx) => item + idx);
-const redu = test.reduce((acc, item) => acc + item, 0);
-console.log(redu); // 6, works as expected
+const sum = test.reduce((acc, item) => acc + item, 0);
+console.log(sum); // 6
 
-const re = test.reduce((table, item, idx) => table[idx] = item, {});
-console.log(re); // does not work as expected
+const tableObj = test.reduce((table, item, idx) => {
+    table[idx] = item;
+    return table;
+    }, {});
+console.log(tableObj); // { '0': 1, '1': 2, '2': 3 }
