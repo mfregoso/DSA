@@ -10,17 +10,17 @@ class ArrayList {
 
   push(val) {
       this[this.length] = val;
-      ++this.length;
-      return this;
+      return ++this.length;
   }
 
   pop() {
       if (this.length) {
           const endIndex = this.length - 1;
-          delete this[endIndex];
           --this.length;
+          const tmp = this[endIndex];
+          delete this[endIndex];
+          return tmp;
       }
-      return this;
   }
 
   unshift(val) {
@@ -28,20 +28,20 @@ class ArrayList {
           this[i] = this[i-1];
       }
       this[0] = val;
-      ++this.length;
-      return this;
+      return ++this.length;
 
   }
 
   shift() {
       if (this.length) {
+          const tmp = this[0];
           for (let i = 0; i < this.length - 1; i++) {
-          this[i] = this[i+1];
+            this[i] = this[i+1];
           }
           delete this[this.length - 1];
           --this.length;
+          return tmp;
       }
-      return this;
   }
 
   map(callback) {
